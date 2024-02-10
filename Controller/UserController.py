@@ -15,7 +15,7 @@ def save(request: request):
     new_account = User(id, name, location, birthday, email, password)
     requests.post(URL+"users.json", json=new_account.to_json())
 
-    return f"Account created for {name}!", 201
+    return f"{id}!", 201
 
 def get_accounts(request: request):
     email = request.json.get('email')
@@ -24,6 +24,16 @@ def get_accounts(request: request):
     users_list = list(response.json().values())
     for user in users_list:
         if email == user['email'] and password == user['password']:
-            return "true"
+            return user.id
 
     return "false"
+
+def get_all_accounts(request: request):
+    id = request.json.get('id')
+    response = requests.get(URL+"users.json")
+    users_list = list(response.json().values())
+    for user in users_list:
+        if id == user['id']:
+            return user, 200
+
+    return "error user not found", 404
