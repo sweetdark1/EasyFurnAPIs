@@ -1,18 +1,24 @@
 import json
 class Item:
-    def __init__(self, id, name, price, category, picture):
-        self.id = id
+    def __init__(self,category, name, price, picture, description, quantity, status):
+
         self.category = category
         self.name = name
         self.price = price
         self.picture = picture
+        self.description = description
+        self.quantity = quantity
+        self.status = status
 
     def to_json(self):
         item_data = {
-            'id': str(self.id),
-            'category': self.category,
             'name': self.name,
-            'price': self.price,
-            'picture': self.picture
+            'category': self.category,
+            'picture': self.picture,
+            'description': self.description,
+            'quantity': self.quantity,
+            'status': self.status,
+            'price': self.price
         }
         return item_data
+

@@ -24,7 +24,7 @@ def get_accounts(request: request):
     users_list = list(response.json().values())
     for user in users_list:
         if email == user['email'] and password == user['password']:
-            return user.id
+            return str(user['id'])
 
     return "false"
 

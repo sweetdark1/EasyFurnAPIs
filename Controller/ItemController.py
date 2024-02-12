@@ -8,22 +8,22 @@ URL = "https://easy-furniture-59f61-default-rtdb.europe-west1.firebasedatabase.a
 
 
 def save(request: request):
-    id = uuid.uuid4()
-    name = request.json.get('name')
-    price = request.json.get('price')
-    category = request.json.get('category')
-    picture = request.files.get('picture')
-    new_item = Item(id, name, price, category, picture)
+    data = request.json
+    name = data.get('name')
+    price = data.get('price')
+    category = data.get('category')
+    description = data.get('description')
+    quantity = data.get('quantity')
+    status = data.get('status')
+    picture = data.get('picture')
+    new_item = Item(category, name, price, picture, description, quantity, status)
     requests.post(URL + "items.json", json=new_item.to_json())
 
-    return f"item added {name}!", 201
+    return f"item added {name}!", 200
 
 
 def get_items(request: request):
     id = request.json.get('id')
-    price = request.json.get('price')
-    category = request.json.get('category')
-    picture = request.files.get('picture')
     response = requests.get(URL + "items.json")
     items_list = list(response.json().values())
     for item in items_list:
